@@ -1,0 +1,9 @@
+IndentWidth: 4
+BasedOnStyle: LLVM
+ColumnLimit: 80
+UseTab: Never
+BreakBeforeBraces: Allman
+AllowShortFunctionsOnASingleLine: Empty
+SpacesBeforeTrailingComments: 1
+AlignTrailingComments: true
+IndentCaseLabels: true
