@@ -38,6 +38,7 @@ void navegation()
                 break;
             case 4:
                 printf("Delete Task\n");
+                delete_tasks();
                 break;
             default:
                 puts("Opção inválida");

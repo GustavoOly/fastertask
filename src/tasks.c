@@ -3,6 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * @brief Retorna o status da tarefa
+ *
+ * @param status
+ * @return const char*
+ */
 const char *get_status(int status)
 {
     switch (status)
@@ -18,6 +24,10 @@ const char *get_status(int status)
     }
 }
 
+/**
+ * @brief Registra uma tarefa no arquivo tasks.txt
+ *
+ */
 void registre_tasks()
 {
     char id_buffer[10];
@@ -73,6 +83,10 @@ void list_tasks()
     free(task.description);
 }
 
+/**
+ * @brief Atualiza uma tarefa do arquivo tasks.txt
+ *
+ */
 void update_tasks()
 {
     FILE *file;
@@ -112,4 +126,57 @@ void update_tasks()
     }
     fclose(file);
     free(task.description);
+}
+
+/**
+ * @brief Deleta uma tarefa do arquivo tasks.txt
+ *
+ */
+void delete_tasks()
+{
+    printf("Digite o id para deletar a tarefa: ");
+    char id_buffer[10];
+    fgets(id_buffer, 10, stdin);
+    id_buffer[strcspn(id_buffer, "\n")] = 0;
+    int id = atoi(id_buffer);
+
+    FILE *file, *temp;
+    file = fopen("tasks.txt", "r");
+    temp = fopen("temp.txt", "w");
+    if (file == NULL || temp == NULL)
+    {
+        printf("Erro ao abrir o arquivo\n");
+        return;
+    }
+
+    Task task;
+    task.description = (char *)malloc(100 * sizeof(char));
+    int found = 0;
+
+    while (fscanf(file, "%d;%[^;];%d\n", &task.id, task.description,
+                  &task.tasks_status) != EOF)
+    {
+        if (task.id == id)
+        {
+            found = 1;
+            printf("Tarefa deletada com sucesso\n");
+        }
+        else
+        {
+            fprintf(temp, "%d;%s;%d\n", task.id, task.description,
+                    task.tasks_status);
+        }
+    }
+
+    if (!found)
+    {
+        printf("Tarefa com ID %d não encontrada\n", id);
+    }
+
+    fclose(file);
+    fclose(temp);
+    free(task.description);
+
+    remove("tadddsks.txt");
+    rename("temp.txt", "tasks.txt");
 }
