@@ -6,7 +6,7 @@ project(datas LANGUAGES C)
 find_package(Curses REQUIRED)
 
 # Adiciona o executável
-add_executable(datas main.c src/navegation.c)
+add_executable(datas main.c src/navegation.c src/tasks.c)
 
 # Linka ncurses ao executável
 target_link_libraries(datas PRIVATE ${CURSES_LIBRARIES})
